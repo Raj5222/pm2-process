@@ -15,6 +15,10 @@ npm install -g pm2
 ```
 
 - 🚀 PM2 Commands
+- Install Node For Sprate Manual Dashbord
+```
+npm install
+```
 - Start all processes
 ```
 pm2 start ecosystem.config.js

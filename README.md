@@ -2,6 +2,8 @@
 
 This project uses **PM2** (Process Manager 2) to run and manage the Node.js application in All Env With Ubuntu.
 
+#### Place the `ecosystem.config.js` file in the root directory of your microservices.
+
 ---
 
 ## 📦 Requirements

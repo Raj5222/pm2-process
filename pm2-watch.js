@@ -6,6 +6,7 @@ import logUpdate from "log-update";
 import { execSync } from "child_process";
 import fs from "fs";
 import readline from "readline";
+import { exit } from "process";
 
 // =============================
 // Constants
@@ -117,7 +118,7 @@ function getPorts(pid) {
   }
 }
 
-function renderEnvTable(serviceFolder) {
+function getEnvFileinObj(serviceFolder) {
   const envPath = `${serviceFolder}/.env`;
   if (!fs.existsSync(envPath)) return [];
 
@@ -128,7 +129,11 @@ function renderEnvTable(serviceFolder) {
       return [line.slice(0, idx), line.slice(idx + 1)];
     })
   );
+  return envConfig
+}
 
+function renderEnvTable(serviceFolder) {
+  const envConfig = getEnvFileinObj(serviceFolder);
   const rows = [];
   for (const [key, value] of Object.entries(envConfig)) {
     rows.push(`${chalk.yellow(key)} = ${chalk.green(value)}`);
@@ -302,21 +307,27 @@ function startMonitor() {
   pm2.connect((err) => {
     if (err) {
       console.error(chalk.red("❌ Failed to connect to PM2"), err);
-      process.exit(2);
+      exit(2);
     }
 
     setInterval(() => {
       pm2.list((err, procs) => {
-        if (err) return console.error(chalk.red("❌ Error fetching list"), err);
+        if (err){
+          console.error(chalk.red("❌ Error fetching list"), err);
+          exit(2);
+        }
 
         let selectedProcs = procs;
         if (filterList) {
-          selectedProcs = procs.filter(
-            (p) => filterList.includes(String(p.pm_id)) || filterList.includes(p.name)
-          );
+          if (!filterList.includes("all")) {
+            selectedProcs = procs.filter(
+              (p) => filterList.includes(String(p.pm_id)) || filterList.includes(p.name)
+            );
+          }
+
           if (!selectedProcs.length) {
-            logUpdate(chalk.red(`❌ Process(es) "${filterArg}" not found`));
-            return;
+            logUpdate(chalk.red(`❌ Process "${filterArg}" not found`));
+            exit(2)
           }
         }
 
@@ -339,25 +350,25 @@ if (showEnv) {
   pm2.connect((err) => {
     if (err) {
       console.error(chalk.red("❌ Failed to connect to PM2"), err);
-      process.exit(2);
+      exit(2);
     }
 
     pm2.list((err, procs) => {
       if (err) {
         console.error(chalk.red("❌ Error fetching list"), err);
-        process.exit(2);
+        exit(2);
       }
 
       let selectedProcs = procs;
-      if (filterList) {
+      if (filterList && !filterList.includes("all")) {
         selectedProcs = procs.filter(
-          (p) => filterList.includes(String(p.pm_id)) || filterList.includes(p.name)
+          (p) => filterList.includes(String(p.pm_id)) || filterList.includes(p.name) || filterList.includes("all")
         );
       }
 
       if (!selectedProcs.length) {
-        console.error(chalk.red(`❌ Process(es) "${filterArg}" not found`));
-        process.exit(2);
+        console.error(chalk.red(`❌ Process "${filterArg}" not found`));
+        exit(2);
       }
 
       const envLines = [];
@@ -365,7 +376,7 @@ if (showEnv) {
         envLines.push(...renderEnvTable(p.pm2_env.pm_cwd), selectedProcs?.length > 1 ? `${chalk.red(`End Env File ${p.name}.`)} \n` : "");
       });
 
-      scrollOutput(envLines, 30, `📦 Environment Variables(${selectedProcs.map(p => p.name).join()})`);
+      scrollOutput(envLines, 30, `📦 Environment Variables(${selectedProcs?.map(p => chalk.yellow(p?.name))?.join()})`);
     });
   });
 } else {

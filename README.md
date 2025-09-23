@@ -28,15 +28,16 @@ pm2 start ecosystem.config.js
 
 🔹 Process Management
 ```
-pm2 start app.js --name my-app     # Start app with a custom name
-pm2 start ecosystem.config.js      # Start all apps from ecosystem file
-pm2 restart <name|id>              # Restart a process
-pm2 reload <name|id>               # Reload a process (zero-downtime)
-pm2 stop <name|id>                 # Stop a process
-pm2 delete <name|id>               # Delete a process
-pm2 delete all                     # Delete all processes
-pm2 list                           # List all running processes
-pm2 describe <name|id>             # Detailed process info
+pm2 start app.js --name my-app                                      # Start app with a custom name
+pm2 start ecosystem.config.js                                       # Start all apps from ecosystem file
+pm2 restart <name|id>                                               # Restart a process
+pm2 reload <name|id>                                                # Reload a process (zero-downtime)
+pm2 stop <name|id>                                                  # Stop a process
+pm2 delete <name|id>                                                # Delete a process
+pm2 delete all                                                      # Delete all processes
+pm2 list                                                            # List all running processes
+pm2 describe <name|id>                                              # Detailed process info
+pm2 start <index file> -i <Instance Count> --name new-Instance-Name  # Crete Instance Of Micro
 ```
 
 🔹 Logs & Monitoring

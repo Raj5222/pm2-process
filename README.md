@@ -37,7 +37,8 @@ pm2 delete <name|id>                                                # Delete a p
 pm2 delete all                                                      # Delete all processes
 pm2 list                                                            # List all running processes
 pm2 describe <name|id>                                              # Detailed process info
-pm2 start <index file> -i <Instance Count> --name new-Instance-Name  # Crete Instance Of Micro
+pm2 start <index file> -i <Instance Count> --name new-Instance-Name # Crete Instance Of Micro
+pm2 resurrect                                                       #Retore Micro From Save Point
 ```
 
 🔹 Logs & Monitoring

@@ -5,7 +5,8 @@
   "bin": {
     "pm2-w": "./pm2-watch.js",
     "pm2-s": "./pm2-servicePath.js",
-    "servicepath": "./pm2-servicePath.js"
+    "servicepath": "./pm2-servicePath.js",
+    "pm2-restart": "./pm2-service-restart.js"
   },
   "dependencies": {
     "chalk": "^5.6.2",

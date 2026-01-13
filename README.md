@@ -23,13 +23,13 @@ npm install
 ```
 - Start all processes
 ```
-pm2 start ecosystem.config.js
+pm2 start ecosystem.config.cjs
 ```
 
 🔹 Process Management
 ```
 pm2 start app.js --name my-app                                      # Start app with a custom name
-pm2 start ecosystem.config.js                                       # Start all apps from ecosystem file
+pm2 start ecosystem.config.cjs                                      # Start all apps from ecosystem file
 pm2 restart <name|id>                                               # Restart a process
 pm2 reload <name|id>                                                # Reload a process (zero-downtime)
 pm2 stop <name|id>                                                  # Stop a process

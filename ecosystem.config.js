@@ -65,7 +65,7 @@ const getAppConfig = (name, cwd) => {
 };
 
 const services = fs.readdirSync(BASE_DIR, { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory() && !IGNORE_DIRS.includes(dirent.name))
+  .filter(dirent => dirent && dirent.isDirectory() && !IGNORE_DIRS.includes(dirent.name))
   .map(dirent => getAppConfig(dirent.name, path.join(BASE_DIR, dirent.name)))
   .filter(app => app !== null); // Remove nulls (skipped apps)
 

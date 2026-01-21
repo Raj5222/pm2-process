@@ -38,8 +38,9 @@ pm2 delete all                                                      # Delete all
 pm2 list                                                            # List all running processes
 pm2 describe <name|id>                                              # Detailed process info
 pm2 start <index file> -i <Instance Count> --name new-Instance-Name # Crete Instance Of Micro
-pm2 resurrect                                                       #Retore Micro From Save Point
-pm2 scale name +1                                                   #Incress Instance
+pm2 resurrect                                                       # Retore Micro From Save Point
+pm2 scale name +1                                                   # Incress Instance
+pm2 scale name <N>                                                  # Set Instance To Given Number
 ```
 
 🔹 Logs & Monitoring

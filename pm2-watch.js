@@ -63,7 +63,7 @@ class ServicePathResolver {
     }
 
     const servicePathMap = {};
-    const mapRegex = /map\s+\$http_servicepath\s+\$pool\s*\{([^}]+)\}/;
+    const mapRegex = /map\s+\$(?:service_id|http_servicepath)\s+\$pool\s*\{([^}]+)\}/;
     const mapMatch = text.match(mapRegex);
     if (mapMatch) {
       for (let line of mapMatch[1].split("\n")) {

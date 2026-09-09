@@ -33,7 +33,7 @@ class ServicePathResolver {
 
     // 2. Extract Service Paths & Merge
     const servicePathMap = {};
-    const mapRegex = /map\s+\$http_servicepath\s+\$pool\s*\{([^}]+)\}/;
+    const mapRegex = /map\s+\$(?:service_id|http_servicepath)\s+\$pool\s*\{([^}]+)\}/;
     const mapMatch = text.match(mapRegex);
     
     if (mapMatch) {
